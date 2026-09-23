@@ -1,0 +1,146 @@
+{% extends "media_gallery/base.html" %}
+
+
+{% block title %}
+    Home | Multimedia Gallery
+{% endblock %}
+
+
+{% block content %}
+
+<section class="hero">
+
+    <h2>
+        Explore Our Multimedia Collection
+    </h2>
+
+    <p>
+        Discover images, videos, and audio content.
+    </p>
+
+</section>
+
+
+<section class="media-section">
+
+    <h2>
+        Latest Media
+    </h2>
+
+
+    {% if media_items %}
+
+        <div class="media-grid">
+
+            {% for item in media_items %}
+
+                <article class="media-card">
+
+                    <h3>
+                        {{ item.title }}
+                    </h3>
+
+
+                    {% if item.description %}
+
+                        <p>
+                            {{ item.description }}
+                        </p>
+
+                    {% endif %}
+
+
+                    {% if item.image %}
+
+                        <div class="media-preview">
+
+                            <img
+                                src="{{ item.image.url }}"
+                                alt="{{ item.title }}"
+                            >
+
+                        </div>
+
+                    {% endif %}
+
+
+                    {% if item.video %}
+
+                        <div class="media-preview">
+
+                            <video
+                                controls
+                                preload="metadata"
+                            >
+
+                                <source
+                                    src="{{ item.video.url }}"
+                                    type="video/mp4"
+                                >
+
+                                Your browser does not support video playback.
+
+                            </video>
+
+                        </div>
+
+                    {% endif %}
+
+
+                    {% if item.audio %}
+
+                        <div class="media-preview">
+
+                            <audio controls>
+
+                                <source
+                                    src="{{ item.audio.url }}"
+                                    type="audio/mpeg"
+                                >
+
+                                Your browser does not support audio playback.
+
+                            </audio>
+
+                        </div>
+
+                    {% endif %}
+
+
+                    <p class="media-date">
+
+                        Added:
+                        {{ item.created_at|date:"M d, Y" }}
+
+                    </p>
+
+
+                    <a
+                        href="{% url 'media_detail' item.pk %}"
+                        class="media-detail-link"
+                    >
+                        View Media
+                    </a>
+
+                </article>
+
+            {% endfor %}
+
+        </div>
+
+
+    {% else %}
+
+        <div class="empty-state">
+
+            <p>
+                No multimedia items are available yet.
+            </p>
+
+        </div>
+
+    {% endif %}
+
+</section>
+
+{% endblock %}
