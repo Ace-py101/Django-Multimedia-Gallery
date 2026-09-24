@@ -1,5 +1,10 @@
 from django.db import models
 
+from cloudinary_storage.storage import (
+    RawMediaCloudinaryStorage,
+    VideoMediaCloudinaryStorage,
+)
+
 
 class MediaItem(models.Model):
 
@@ -19,12 +24,14 @@ class MediaItem(models.Model):
 
     video = models.FileField(
         upload_to="videos/",
+        storage=VideoMediaCloudinaryStorage(),
         blank=True,
         null=True
     )
 
     audio = models.FileField(
         upload_to="audio/",
+        storage=RawMediaCloudinaryStorage(),
         blank=True,
         null=True
     )
